@@ -170,6 +170,22 @@ class LibvirtVolumeDriver(LibvirtBaseVolumeDriver):
         conf.source_path = connection_info['data']['device_path']
         return conf
 
+    def extend_volume(self, connection_info, instance, requested_size):
+        """Extend the volume.
+
+        :param connection_info: connection information about the volume
+            that has been extended.
+        :param instance: instance connected to the newly extended volume.
+        :param requested_size: new extended size (in bytes) for the volume to
+            be extended.
+
+        :returns: the new size to use when resizing the disk in QEMU.
+
+        Note: the requested_size parameter is not used by all volume drivers
+        """
+        # There is nothing to do for local devices
+        return requested_size
+
 
 class LibvirtFakeVolumeDriver(LibvirtBaseVolumeDriver):
     """Driver to attach fake volumes to libvirt."""
